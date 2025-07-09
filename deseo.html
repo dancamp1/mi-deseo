@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Deseo Eres Tú</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow: hidden;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent url('https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/star.png') repeat top center;
+            animation: moveStars 200s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes moveStars {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 10000px 5000px;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 100px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #ffffff;
+        }
+
+        .reveal-button {
+            background: transparent;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .reveal-button:hover {
+                background: #ff00ff;
+                color: white;
+            }
+
+        .heart-container {
+            display: none;
+            margin: 50px auto 20px;
+            position: relative;
+            width: 200px;
+            height: 180px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+            .heart-container.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .heart-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .heart-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2em;
+            color: #ffffff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff;
+            }
+
+            to {
+                text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+            }
+        }
+
+        .message {
+            font-size: 1.5em;
+            text-shadow: 0 0 10px #ffffff;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 20px;
+            opacity: 1;
+            animation: floatUp 3s forwards;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <h1>A veces el universo<br>nos envía señales</h1>
+        <button class="reveal-button" onclick="reveal()">Revela mi deseo</button>
+
+        <div class="heart-container" id="heart">
+            <svg class="heart-svg" viewBox="0 0 32 29.6">
+                <path d="M23.6,0c-2.7,0-5,1.4-6.6,3.6C15.4,1.4,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
+        c0,5.4,4.4,9.8,11.1,15.8l4.4,3.5l4.4-3.5C27.6,20.2,32,15.8,32,10.4C32,4.7,27.3,0,23.6,0z"
+                      fill="none" stroke="white" stroke-width="0.8" />
+            </svg>
+            <div class="heart-text">Te amo Gorda</div>
+        </div>
+
+        <div class="message" id="message">Mi deseo eres tú</div>
+    </div>
+
+    <script>
+        function reveal() {
+            const heart = document.getElementById('heart');
+            heart.style.display = 'block';
+            setTimeout(() => heart.classList.add('show'), 10);
+            document.getElementById('message').style.display = 'block';
+
+            // Crear 20 corazones flotantes
+            for (let i = 0; i < 20; i++) {
+                createFloatingHeart();
+            }
+        }
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤';
+            heart.style.left = (50 + Math.random() * 40 - 20) + '%'; // Distribución alrededor
+            heart.style.top = '60%'; // Aparece cerca del corazón grande
+            heart.style.fontSize = (15 + Math.random() * 10) + 'px';
+
+            document.body.appendChild(heart);
+
+            // Remover después de la animación
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
